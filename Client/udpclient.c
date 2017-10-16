@@ -23,6 +23,7 @@
 int totalNumPackets = 0;
 int nextPacketNeeded = 0;
 int packetsLoaded = 0;
+int fileSize = 0;
 int bytes;
 
 FILE* fp;
@@ -43,6 +44,7 @@ void clean(){
   totalNumPackets = 0;
   nextPacketNeeded = 0;
   packetsLoaded = 0;
+  fileSize = 0;
 }
 
 int checksum(void *buffer, size_t len, unsigned int checksum){
@@ -69,8 +71,8 @@ packet nullPacket(){
 }
 
 void emptyWindow(){
-  int i =0;
-  for(i; i < WINDOWSIZE; i++){
+  int i;
+  for(i=0; i < WINDOWSIZE; i++){
     packetStorage[i] = nullPacket();
   }
   printf("Emptied storage window\n");
@@ -87,7 +89,11 @@ void savetoFile(){
         } else {
           printf("Packet is corrupted\n");
         }
-        fwrite(packetStorage[i].data, 1, sizeof(packetStorage[i].data), fp);
+        if(nextPacketNeeded == totalNumPackets){
+          fwrite(packetStorage[i].data,1 , fileSize%PACKETSIZE, fp);
+        } else {
+          fwrite(packetStorage[i].data, 1, sizeof(packetStorage[i].data), fp);
+        }
         printf("Saved packet id:%d to file\n", packetStorage[i].idNumber);
         ++packetsLoaded;
         ++nextPacketNeeded;
@@ -196,7 +202,7 @@ int main(){
       return 0;
     }
 
-    sendto(sockfd,s_buffer,strlen(s_buffer),0,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
+    sendto(sockfd,s_buffer,sizeof(s_buffer),0,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
 
     int size = 0;
     int len = sizeof(serveraddr);
@@ -211,11 +217,12 @@ int main(){
         printf("File was not found or was unable to be opened\n");
       }
     } else {
-      totalNumPackets = size / 1024;
-      if((size % 1024) != 0){
+      totalNumPackets = size / 1000;
+      if((size % 1000) != 0){
         ++totalNumPackets;
       }
 
+      fileSize = size;
       printf("File size: %d\n",size);
       printf("Total Packets: %d\n", totalNumPackets);
 
