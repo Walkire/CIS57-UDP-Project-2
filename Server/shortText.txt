@@ -1,0 +1,32 @@
+CIS457 - Data Communication
+
+Nathaniel Allvin
+UDP Reliability Project in C
+
+Part 1 10/3/2017
+
+Trying to get data sent from one location to another
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut dignissim massa. Maecenas urna diam, vulputate nec risus et, venenatis blandit elit. Aenean finibus eu felis eu pulvinar. Nunc ullamcorper at sem quis iaculis. Nunc nibh ante, mattis non hendrerit eget, volutpat vel velit. Sed tincidunt sem a scelerisque laoreet. Donec posuere ligula ac consequat rhoncus. Vestibulum tristique luctus tincidunt. Sed porttitor ornare nibh, quis rhoncus ipsum maximus in. Vestibulum laoreet scelerisque nulla maximus faucibus. Fusce ultricies tempus varius. Duis vitae nisi eget elit tincidunt ornare ut quis felis. Curabitur at urna dignissim, aliquet tortor ac, auctor massa. Phasellus non lacus pretium, molestie mauris in, vehicula sem. Vivamus vel ligula tortor.
+
+Suspendisse augue justo, viverra non nulla quis, bibendum volutpat ante. Vestibulum tortor turpis, porttitor nec sagittis volutpat, ullamcorper dapibus enim. In volutpat finibus vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. In in neque facilisis, congue quam nec, rutrum mi. Nulla facilisi. Fusce nec tortor dui. Sed non nisi a diam fermentum gravida vel vel massa. Donec suscipit, turpis id rutrum sodales, odio quam facilisis purus, eget malesuada nunc nisl non est.
+
+Maecenas ultricies gravida egestas. Nullam ut enim viverra, commodo elit eu, placerat tellus. In et dictum elit, in euismod tortor. Morbi hendrerit lobortis tellus. Aliquam viverra egestas pulvinar. In quis magna dui. Ut volutpat sapien tortor, ac ullamcorper nisl sagittis quis. Cras egestas hendrerit justo at tincidunt. Cras id tellus feugiat, volutpat odio id, vehicula justo. Pellentesque nec ante justo. Nunc quis mauris iaculis, euismod mi id, scelerisque massa. Sed vestibulum tellus ut ante consectetur, et fringilla orci hendrerit.
+
+Donec tempus finibus sapien ut pharetra. Nullam vehicula, ipsum at porttitor aliquam, eros urna iaculis turpis, quis lobortis erat dui eu erat. Nunc egestas enim a turpis congue, vitae ultrices risus ultrices. Sed varius massa non purus bibendum, ut facilisis est tempor. Quisque dictum leo id lacus porta porta sed sed nisi. Duis egestas congue facilisis. Nullam ut bibendum enim, ut fringilla est. Praesent molestie orci lacinia, iaculis magna non, blandit nisl. Duis nec neque a augue blandit fringilla. Morbi id lectus maximus nisi aliquam lacinia id eget sapien. Nunc pharetra ante massa, sed malesuada ex imperdiet quis. Morbi non diam turpis. Sed eget tincidunt libero, vel aliquet sem.
+
+Donec dignissim sollicitudin rhoncus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus efficitur porttitor elit, at condimentum lacus iaculis at. In non lacus euismod, aliquet libero non, mattis risus. Proin eget libero convallis, bibendum lorem at, congue lorem. Ut elementum nisi orci, id tempus neque luctus quis. Proin tristique placerat velit, vel pretium odio.
+
+Nulla fermentum sem eget arcu maximus, eget condimentum orci maximus. Donec viverra eleifend ante, sed sagittis nisi porttitor nec. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer id mauris purus. Curabitur fermentum nisi at ligula vehicula, nec blandit sem tristique. Nulla enim elit, iaculis ac maximus in, ultricies sed justo. Sed consequat purus ut tellus posuere feugiat. In a egestas nisl.
+
+Nullam urna urna, ullamcorper vel est eget, lacinia dictum est. Praesent vestibulum iaculis tellus, at ullamcorper tellus iaculis non. Curabitur tristique sit amet enim eget laoreet. Aenean in nulla enim. Proin congue ut ligula vitae maximus. Aenean sed tempor tortor. In at ligula dui. In varius mollis purus, eget porttitor nibh dictum eu.
+
+Nam eu tortor dolor. Etiam sit amet faucibus tellus. Mauris nisl quam, ullamcorper eget lacinia eget, consectetur et nibh. Sed nec sodales sapien. Etiam pharetra posuere fermentum. Ut sed lectus metus. Aliquam lobortis lectus at erat pulvinar volutpat ac ultricies lorem.
+
+Vivamus pretium commodo mauris non condimentum. Aliquam egestas justo sit amet convallis vehicula. Nulla facilisi. Vestibulum nisl urna, placerat eget sapien at, ultrices ultrices velit. Curabitur sed est eget mauris mattis viverra. Duis nec augue nec tortor ullamcorper auctor eget semper libero. Maecenas posuere a neque non feugiat. Suspendisse mollis id nisi at fringilla. Proin vitae interdum quam. In tincidunt nibh et dolor gravida malesuada. Nam quis ullamcorper mauris, vitae dignissim purus. Integer viverra vitae est sed mollis.
+
+Curabitur sed lorem molestie, ultrices dui at, lacinia augue. Curabitur ac posuere augue. Etiam sollicitudin, magna ut ultrices rutrum, nibh lorem tincidunt lacus, ut iaculis ex enim id orci. Proin dignissim turpis erat, in sollicitudin dui imperdiet ut. Suspendisse potenti. In hac habitasse platea dictumst. Donec ultrices mi sed velit porttitor ultrices. Maecenas lobortis porta lacinia. Donec porta, libero et sagittis dapibus, lectus leo aliquam massa, sit amet varius ante urna pellentesque lacus. Nullam scelerisque ex ut dignissim auctor. Duis auctor interdum enim eget lobortis. Aenean eget risus elementum, pulvinar tortor ut, ultricies nisi. Vestibulum commodo, leo non interdum aliquam, ipsum dolor eleifend nibh, at consequat diam nisi quis velit. Fusce sed lorem quis tellus mollis finibus.
+
+Nam sagittis placerat turpis sit amet mollis. Nulla sollicitudin consectetur lacus id varius. Quisque pellentesque nisi ut cursus posuere. Ut vel consequat sem. Maecenas magna nunc, cursus non ex quis, dictum lacinia neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel viverra libero.
+
+Morbi condimentum, est fringilla egestas porta, massa quam dignissim mi, id scelerisque nibh eros varius justo. Mauris nec mollis erat, eu tempor orci. Proin a massa consectetur, consequat risus in, ullamcorper justo. Morbi ullamcorper tellus velit, non aliquam justo pharetra sed. Suspendisse a felis mattis, rutrum ante vel, porta nunc. Integer pellentesque, arcu at viverra vulputate, nibh erat auctor metus.
