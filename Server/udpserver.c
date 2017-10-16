@@ -127,6 +127,7 @@ void moveWindow(int minWindowNum){
 void runFileTransfer(){
   int ack;
   int running = 1;
+  int resend = 0;
   int i, bytes, packetNeeded;
   int length = sizeof(clientaddr);
   printf("Start file transfer to %s:%d\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
@@ -144,8 +145,15 @@ void runFileTransfer(){
     printf("Got from client: %d\n", ack);
     if(bytes == -1){
       printf("No data recived retrying...\n");
+      ++resend;
+      if(resend == 3){
+        printf("File transfer ended early\n");
+        running = 0;
+        break;
+      }
       continue;
     } else {
+      resend = 0;
       if(ack == EXIT){
         printf("File transfer successful!\n");
         running = 0;
@@ -184,7 +192,7 @@ int main(){
 
   int length = sizeof(clientaddr);
   struct timeval timeout;
-  timeout.tv_sec=5;
+  timeout.tv_sec=1;
   timeout.tv_usec=0;
   setsockopt(sockfd,SOL_SOCKET,SO_RCVTIMEO,&timeout,sizeof(timeout));
 
