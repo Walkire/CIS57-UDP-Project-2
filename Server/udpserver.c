@@ -22,6 +22,7 @@
 int nextIdNumber = 0;
 int totalNumPackets = 0;
 int packetsLoaded = 0;
+int fileSize = 0;
 
 FILE* fp;
 int sockfd;
@@ -39,6 +40,7 @@ void clean(){
   nextIdNumber = 0;
   totalNumPackets = 0;
   packetsLoaded = 0;
+  fileSize = 0;
 }
 
 packet nullPacket(){
@@ -59,11 +61,13 @@ unsigned checksum(void *buffer, size_t len){
 }
 
 packet newPacket(){
+  size_t len;
   packet pkt;
   ++nextIdNumber;
   pkt.idNumber = nextIdNumber;
   memset(pkt.data, 0, PACKETSIZE);
-  size_t len = fread(pkt.data, 1, PACKETSIZE, fp);
+  len = fread(pkt.data, 1, PACKETSIZE, fp);
+  printf("packet id:%d length:%d\n", pkt.idNumber, len);
   pkt.checksum=checksum(pkt.data, len);
   printf("Created packet %d, checksum: %#x\n",pkt.idNumber, pkt.checksum);
   return pkt;
@@ -134,7 +138,7 @@ void runFileTransfer(){
         break;
       }
       sendto(sockfd, &window[i], sizeof(window[i]), 0, (struct sockaddr*)&clientaddr, length);
-      printf("Packet id:%d sent\n", window[i].idNumber);
+      printf("Packet id:%d sent\n", window[i].idNumber, sizeof(window[i].data));
     }
     bytes = recvfrom(sockfd,&ack,sizeof(int),0,(struct sockaddr*)&clientaddr,&length);
     printf("Got from client: %d\n", ack);
@@ -201,11 +205,12 @@ int main(){
        struct stat stats;
        stat(buffer, &stats);
 
-       totalNumPackets = stats.st_size / 1024;
-       if((stats.st_size % 1024) != 0){
+       totalNumPackets = stats.st_size / 1000;
+       if((stats.st_size % 1000) != 0){
          ++totalNumPackets;
        }
 
+       fileSize = stats.st_size;
        printf("File size: %d\n", stats.st_size);
        printf("Total packets: %d\n", totalNumPackets);
 
