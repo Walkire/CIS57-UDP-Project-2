@@ -41,6 +41,7 @@ typedef struct packet {
 struct packet packetStorage[WINDOWSIZE];
 
 void clean(){
+  printf("Cleaning\n");
   int len = sizeof(serveraddr);
   char buffer[PACKETSIZE];
 
@@ -50,6 +51,7 @@ void clean(){
   packetsLoaded = 0;
   fileSize = 0;
 
+  wait(5);
   while(bytes != -1){
     bytes = recvfrom(sockfd,buffer,PACKETSIZE,0,(struct sockaddr*)&serveraddr, (socklen_t *) &len);
   }
