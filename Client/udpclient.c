@@ -86,18 +86,18 @@ void savetoFile(){
       if(packetStorage[i].idNumber == nextPacketNeeded){
         if(checksum(packetStorage[i].data, sizeof(packetStorage[i].data), packetStorage[i].checksum)){
           printf("Packet id:%d is clean\n", packetStorage[i].idNumber);
+          if(nextPacketNeeded == totalNumPackets){
+            fwrite(packetStorage[i].data,1 , fileSize%PACKETSIZE, fp);
+          } else {
+            fwrite(packetStorage[i].data, 1, sizeof(packetStorage[i].data), fp);
+          }
+          printf("Saved packet id:%d to file\n", packetStorage[i].idNumber);
+          ++packetsLoaded;
+          ++nextPacketNeeded;
+          break;
         } else {
           printf("Packet is corrupted\n");
         }
-        if(nextPacketNeeded == totalNumPackets){
-          fwrite(packetStorage[i].data,1 , fileSize%PACKETSIZE, fp);
-        } else {
-          fwrite(packetStorage[i].data, 1, sizeof(packetStorage[i].data), fp);
-        }
-        printf("Saved packet id:%d to file\n", packetStorage[i].idNumber);
-        ++packetsLoaded;
-        ++nextPacketNeeded;
-        break;
       }
       if(i == 4){
         loading = 0;
