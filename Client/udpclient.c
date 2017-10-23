@@ -41,7 +41,7 @@ typedef struct packet {
 struct packet packetStorage[WINDOWSIZE];
 
 void clean(){
-  printf("Cleaning\n");
+  printf("Cleaning...\n");
   int len = sizeof(serveraddr);
   char buffer[PACKETSIZE];
 

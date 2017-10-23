@@ -147,7 +147,7 @@ void runFileTransfer(){
     } else {
       maxidNum = packetsLoaded + 1;
     }
-    if(bytes == -1 || ack > maxidNum || ack < window[0].idNumber){
+    if((bytes == -1 || ack > maxidNum || ack < window[0].idNumber) && ack != -1){
       printf("No data recived retrying...\n");
       ++resend;
       if(resend == 3){
