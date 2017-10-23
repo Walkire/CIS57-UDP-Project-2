@@ -126,6 +126,7 @@ void savetoFile(){
 int sendAck(){
   int endtransfer = -1;
   acknowledgement ack;
+  memset(ack.data,0,sizeof(int));
   if(packetsLoaded == totalNumPackets){
     ack.data = endtransfer;
     ack.checksum = checksumEncode(ack.data, sizeof(ack.data));
