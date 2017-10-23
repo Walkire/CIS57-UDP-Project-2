@@ -34,6 +34,11 @@ typedef struct packet {
   unsigned int checksum;
 }packet;
 
+typedef struct acknowledgement {
+  int data;
+  unsigned int checksum;
+}acknowledgement
+
 struct packet window[WINDOWSIZE];
 
 void clean(){
@@ -49,7 +54,7 @@ packet nullPacket(){
   return pkt;
 }
 
-unsigned checksum(void *buffer, size_t len){
+unsigned checksumEncode(void *buffer, size_t len){
   unsigned int checksum = 0;
   unsigned char *buf = (unsigned char *)buffer;
   size_t i;
@@ -60,6 +65,23 @@ unsigned checksum(void *buffer, size_t len){
   return ~checksum;
 }
 
+int checksumDecode(void *buffer, size_t len, unsigned int checksum){
+  unsigned int check = 0;
+  unsigned char *buf = (unsigned char *)buffer;
+  size_t i;
+
+  for(i = 0; i < len; ++i)
+    check += (unsigned int)(*buf++);
+
+  check += checksum;
+
+  if(check == 0xffffffff){
+    return 1;
+  }
+
+  return 0;
+}
+
 packet newPacket(){
   size_t len;
   packet pkt;
@@ -68,7 +90,7 @@ packet newPacket(){
   memset(pkt.data, 0, PACKETSIZE);
   len = fread(pkt.data, 1, PACKETSIZE, fp);
   printf("packet id:%d length:%d\n", pkt.idNumber, len);
-  pkt.checksum=checksum(pkt.data, len);
+  pkt.checksum=checksumEncode(pkt.data, len);
   printf("Created packet %d, checksum: %#x\n",pkt.idNumber, pkt.checksum);
   return pkt;
 }
@@ -125,7 +147,7 @@ void moveWindow(int minWindowNum){
 }
 
 void runFileTransfer(){
-  int ack;
+  acknowledgement ack;
   int running = 1;
   int resend = 0;
   int i, bytes, packetNeeded;
@@ -141,9 +163,10 @@ void runFileTransfer(){
       sendto(sockfd, &window[i], sizeof(window[i]), 0, (struct sockaddr*)&clientaddr, length);
       printf("Packet id:%d sent\n", window[i].idNumber, sizeof(window[i].data));
     }
-    bytes = recvfrom(sockfd,&ack,sizeof(int),0,(struct sockaddr*)&clientaddr,&length);
-    printf("Got from client: %d\n", ack);
-    if(bytes == -1){
+    bytes = recvfrom(sockfd,&ack,sizeof(ack),0,(struct sockaddr*)&clientaddr,&length);
+    
+    printf("Got from client: %d\n", ack.data);
+    if(bytes == -1 || !checksumDecode(ack.data, sizeof(ack.data), ack.checksum)){
       printf("No data recived retrying...\n");
       ++resend;
       if(resend == 3){
@@ -154,12 +177,12 @@ void runFileTransfer(){
       continue;
     } else {
       resend = 0;
-      if(ack == EXIT){
+      if(ack.data == EXIT){
         printf("File transfer successful!\n");
         running = 0;
         break;
       } else {
-        packetNeeded = ack;
+        packetNeeded = ack.data;
         moveWindow(packetNeeded);
       }
     }
