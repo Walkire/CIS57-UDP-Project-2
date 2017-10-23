@@ -38,11 +38,6 @@ typedef struct packet {
   unsigned int checksum;
 }packet;
 
-typedef struct acknowledgement {
-  int data;
-  unsigned int checksum;
-}acknowledgement;
-
 struct packet packetStorage[WINDOWSIZE];
 
 void clean(){
@@ -52,7 +47,7 @@ void clean(){
   fileSize = 0;
 }
 
-int checksumDecode(void *buffer, size_t len, unsigned int checksum){
+int checksum(void *buffer, size_t len, unsigned int checksum){
   unsigned int check = 0;
   unsigned char *buf = (unsigned char *)buffer;
   size_t i;
@@ -67,17 +62,6 @@ int checksumDecode(void *buffer, size_t len, unsigned int checksum){
   }
 
   return 0;
-}
-
-unsigned checksumEncode(void *buffer, size_t len){
-  unsigned int checksum = 0;
-  unsigned char *buf = (unsigned char *)buffer;
-  size_t i;
-
-  for(i = 0; i < len; ++i)
-    checksum += (unsigned int)(*buf++);
-
-  return ~checksum;
 }
 
 packet nullPacket(){
@@ -100,7 +84,7 @@ void savetoFile(){
   while(loading){
     for(i = 0;i < WINDOWSIZE;i++){
       if(packetStorage[i].idNumber == nextPacketNeeded){
-        if(checksumDecode(packetStorage[i].data, sizeof(packetStorage[i].data), packetStorage[i].checksum)){
+        if(checksum(packetStorage[i].data, sizeof(packetStorage[i].data), packetStorage[i].checksum)){
           printf("Packet id:%d is clean\n", packetStorage[i].idNumber);
           if(nextPacketNeeded == totalNumPackets){
             fwrite(packetStorage[i].data,1 , fileSize%PACKETSIZE, fp);
@@ -125,18 +109,12 @@ void savetoFile(){
 
 int sendAck(){
   int endtransfer = -1;
-  acknowledgement ack;
-  memset(ack.data,0,sizeof(int));
   if(packetsLoaded == totalNumPackets){
-    ack.data = endtransfer;
-    ack.checksum = checksumEncode(ack.data, sizeof(ack.data));
-    sendto(sockfd,&ack,sizeof(ack),0,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
+    sendto(sockfd,&endtransfer,sizeof(endtransfer),0,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
     printf("Sent end file transfer to server\n");
     return 1;
   } else {
-    ack.data = nextPacketNeeded;
-    ack.checksum = checksumEncode(ack.data, sizeof(ack.data));
-    sendto(sockfd,&ack,sizeof(ack),0,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
+    sendto(sockfd,&nextPacketNeeded,sizeof(nextPacketNeeded),0,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
     printf("Sent ack for %d+\n", nextPacketNeeded);
     return 0;
   }
