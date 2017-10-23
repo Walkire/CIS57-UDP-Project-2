@@ -41,10 +41,18 @@ typedef struct packet {
 struct packet packetStorage[WINDOWSIZE];
 
 void clean(){
+  int len = sizeof(serveraddr);
+  char buffer[PACKETSIZE];
+
+  bytes = 0;
   totalNumPackets = 0;
   nextPacketNeeded = 0;
   packetsLoaded = 0;
   fileSize = 0;
+
+  while(bytes != -1){
+    bytes = recvfrom(sockfd,buffer,PACKETSIZE,0,(struct sockaddr*)&serveraddr, (socklen_t *) &len);
+  }
 }
 
 int checksum(void *buffer, size_t len, unsigned int checksum){
