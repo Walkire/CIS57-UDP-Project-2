@@ -125,7 +125,7 @@ void moveWindow(int minWindowNum){
 }
 
 void runFileTransfer(){
-  int ack;
+  int ack, maxidNum;
   int running = 1;
   int resend = 0;
   int i, bytes, packetNeeded;
@@ -142,8 +142,12 @@ void runFileTransfer(){
       printf("Packet id:%d sent\n", window[i].idNumber, sizeof(window[i].data));
     }
     bytes = recvfrom(sockfd,&ack,sizeof(int),0,(struct sockaddr*)&clientaddr,&length);
-    printf("Got from client: %d\n", ack);
-    if(bytes == -1 || ack > totalNumPackets || ack < -1){
+    if(totalNumPackets == packetsLoaded){
+      maxidNum = packetsLoaded;
+    } else {
+      maxidNum = packetsLoaded + 1;
+    }
+    if(bytes == -1 || ack > maxidNum || ack < window[0].idNumber){
       printf("No data recived retrying...\n");
       ++resend;
       if(resend == 3){
@@ -159,6 +163,7 @@ void runFileTransfer(){
         running = 0;
         break;
       } else {
+        printf("Got from client: %d\n", ack);
         packetNeeded = ack;
         moveWindow(packetNeeded);
       }

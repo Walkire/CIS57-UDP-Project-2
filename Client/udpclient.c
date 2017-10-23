@@ -96,7 +96,7 @@ void savetoFile(){
           ++nextPacketNeeded;
           break;
         } else {
-          printf("Packet is corrupted\n");
+          printf("Packet %d is corrupted\n", nextPacketNeeded);
         }
       }
       if(i == 4){
