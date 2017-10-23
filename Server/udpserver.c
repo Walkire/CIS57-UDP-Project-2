@@ -37,7 +37,7 @@ typedef struct packet {
 typedef struct acknowledgement {
   int data;
   unsigned int checksum;
-}acknowledgement
+}acknowledgement;
 
 struct packet window[WINDOWSIZE];
 
@@ -164,7 +164,7 @@ void runFileTransfer(){
       printf("Packet id:%d sent\n", window[i].idNumber, sizeof(window[i].data));
     }
     bytes = recvfrom(sockfd,&ack,sizeof(ack),0,(struct sockaddr*)&clientaddr,&length);
-    
+
     printf("Got from client: %d\n", ack.data);
     if(bytes == -1 || !checksumDecode(ack.data, sizeof(ack.data), ack.checksum)){
       printf("No data recived retrying...\n");

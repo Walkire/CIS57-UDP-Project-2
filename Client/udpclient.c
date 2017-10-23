@@ -41,7 +41,7 @@ typedef struct packet {
 typedef struct acknowledgement {
   int data;
   unsigned int checksum;
-}acknowledgement
+}acknowledgement;
 
 struct packet packetStorage[WINDOWSIZE];
 
