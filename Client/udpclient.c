@@ -51,7 +51,7 @@ void clean(){
   packetsLoaded = 0;
   fileSize = 0;
 
-  wait(5);
+  sleep(5000);
   while(bytes != -1){
     bytes = recvfrom(sockfd,buffer,PACKETSIZE,0,(struct sockaddr*)&serveraddr, (socklen_t *) &len);
   }
